@@ -5,7 +5,7 @@ using TodoApi.Models;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/todo")]
     [ApiController]
     public class TodoController : ControllerBase
     {
@@ -17,8 +17,6 @@ namespace TodoApi.Controllers
 
             if (_context.TodoItems.Count() == 0)
             {
-                // Create a new TodoItem if collection is empty,
-                // which means you can't delete all TodoItems.
                 _context.TodoItems.Add(new TodoItem { Title = "I work" });
                 _context.SaveChanges();
             }
@@ -37,6 +35,13 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
             return item;
+        }
+        [HttpPost]
+        public IActionResult Create(TodoItem item)
+        {
+            _context.TodoItems.Add(item);
+            _context.SaveChanges();
+            return CreatedAtRoute("GetTodo", new { id = item.id }, item);
         }
     }
 }
