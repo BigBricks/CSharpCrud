@@ -23,5 +23,10 @@ namespace TodoApi.Controllers
                 _context.SaveChanges();
             }
         }
+        [HttpGet]
+        public ActionResult<List<TodoItem>> GetAll()
+        {
+            return _context.TodoItems.ToList();
+        }
     }
 }
