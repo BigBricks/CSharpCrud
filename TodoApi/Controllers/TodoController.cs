@@ -28,5 +28,15 @@ namespace TodoApi.Controllers
         {
             return _context.TodoItems.ToList();
         }
+        [HttpGet("{id}", Name ="GetTodo")]
+        public ActionResult<TodoItem> GetById(int id)
+        {
+            var item = _context.TodoItems.Find(id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+            return item;
+        }
     }
 }
