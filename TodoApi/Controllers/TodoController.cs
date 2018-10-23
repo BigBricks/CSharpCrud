@@ -26,11 +26,11 @@ namespace TodoApi.Controllers
         {
             return _context.TodoItems.ToList();
         }
-        [HttpGet("{id}", Name ="GetTodo")]
+        [HttpGet("{id}", Name = "GetTodo")]
         public ActionResult<TodoItem> GetById(int id)
         {
             var item = _context.TodoItems.Find(id);
-            if(item == null)
+            if (item == null)
             {
                 return NotFound();
             }
@@ -42,6 +42,32 @@ namespace TodoApi.Controllers
             _context.TodoItems.Add(item);
             _context.SaveChanges();
             return CreatedAtRoute("GetTodo", new { id = item.id }, item);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, TodoItem item)
+        {
+            var todo = _context.TodoItems.Find(id);
+            if(todo == null)
+            {
+                return NotFound();
+            }
+            todo.Complete = item.Complete;
+            todo.Title = item.Title;
+            _context.TodoItems.Update(todo);
+            _context.SaveChanges();
+            return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var todo = _context.TodoItems.Find(id);
+            if (todo == null)
+            {
+                return NotFound();
+            }
+            _context.TodoItems.Remove(todo);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
