@@ -6,8 +6,8 @@ using System.Web.Http.Cors;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/todo")]
     [EnableCorsAttribute("*", "*", "*")]
+    [Route("api/todo")]
     [ApiController]
     public class TodoController : ControllerBase
     {
