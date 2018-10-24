@@ -15,22 +15,16 @@ namespace TodoApi
                 opt.UseInMemoryDatabase("TodoList"));
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            var corsBuilder = new CorsPolicyBuilder();
-            corsBuilder.AllowAnyHeader();
-            corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); 
-            corsBuilder.AllowCredentials();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
-            });
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+                                                                      .AllowAnyMethod()
+                                                                       .AllowAnyHeader()));
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCors("AllowAll");
             app.UseMvc();
-            app.UseCors("SiteCorsPolicy");
         }
     }
 }
