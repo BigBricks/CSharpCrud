@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models;
+using System.Web.Http.Cors;
 
 namespace TodoApi.Controllers
 {
     [Route("api/todo")]
+    [EnableCorsAttribute("*", "*", "*")]
     [ApiController]
     public class TodoController : ControllerBase
     {
